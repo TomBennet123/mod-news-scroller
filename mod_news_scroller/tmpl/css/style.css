@@ -11,11 +11,18 @@
 .scroller {
     display: flex;
     width: fit-content;
-    animation: scroll var(--animation-duration, 24s) linear infinite;
+    --speed-factor: 1;
+    /* Alap sebességű folyamatos görgetés */
+    animation-name: scroll;
+    animation-duration: calc(var(--animation-duration, 24s) * var(--speed-factor, 1));
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
 }
 
 .scroller-container:hover .scroller {
-    animation-play-state: paused;
+    /* Egérrel rámutatva lassítsuk le a görgetést, de ne álljon meg teljesen */
+    --speed-factor: 4;
 }
 
 @keyframes scroll {
