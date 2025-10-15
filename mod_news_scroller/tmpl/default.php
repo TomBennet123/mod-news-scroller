@@ -11,12 +11,15 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 // CSS hozzáadása a dokumentumhoz
 $doc = Factory::getApplication()->getDocument();
-$doc->addStyleSheet(JUri::base(true) . '/modules/mod_news_scroller/tmpl/css/style.css');
+$doc->addStyleSheet(Uri::base(true) . '/modules/mod_news_scroller/tmpl/css/style.css');
+$doc->addScript(Uri::base(true) . '/modules/mod_news_scroller/tmpl/js/scroller.js');
 
 // Dinamikus CSS változók az animációhoz
+$moduleId = (int) $module->id;
 $itemCount = count($articles);
 $itemWidth = $imageWidth; // Kártya szélessége
 $itemMargin = 20; // Kártya jobb oldali margója
@@ -24,7 +27,7 @@ $totalScrollWidth = ($itemWidth + $itemMargin) * $itemCount;
 $animationDuration = $itemCount * 4; // 4 másodperc/elem sebesség
 
 $dynamicStyles = "
-:root {
+#news-scroller-{$moduleId} {
     --card-width: {$itemWidth}px;
     --card-margin: {$itemMargin}px;
     --total-scroll-width: {$totalScrollWidth}px;
@@ -34,7 +37,7 @@ $dynamicStyles = "
 $doc->addStyleDeclaration($dynamicStyles);
 
 ?>
-<div class="scroller-container <?php echo $moduleclass_sfx; ?>">
+<div id="news-scroller-<?php echo $moduleId; ?>" class="scroller-container <?php echo $moduleclass_sfx; ?>">
     <div class="scroller">
         <?php foreach ($articles as $article) : ?>
             <div class="news-card">

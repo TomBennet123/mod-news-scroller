@@ -6,23 +6,21 @@
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    --hover-speed-factor: 0.15;
 }
 
 .scroller {
     display: flex;
     width: fit-content;
-    --speed-factor: 1;
-    /* Alap sebességű folyamatos görgetés */
     animation-name: scroll;
-    animation-duration: calc(var(--animation-duration, 24s) * var(--speed-factor, 1));
+    animation-duration: var(--animation-duration, 24s);
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    animation-play-state: running;
+    will-change: transform;
 }
 
-.scroller-container:hover .scroller {
-    /* Egérrel rámutatva lassítsuk le a görgetést, de ne álljon meg teljesen */
-    --speed-factor: 4;
+.scroller.is-js-controlled {
+    animation: none;
 }
 
 @keyframes scroll {
