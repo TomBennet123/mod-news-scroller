@@ -6,16 +6,21 @@
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    --hover-speed-factor: 0.15;
 }
 
 .scroller {
     display: flex;
     width: fit-content;
-    animation: scroll var(--animation-duration, 24s) linear infinite;
+    animation-name: scroll;
+    animation-duration: var(--animation-duration, 24s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
 }
 
-.scroller-container:hover .scroller {
-    animation-play-state: paused;
+.scroller.is-js-controlled {
+    animation: none;
 }
 
 @keyframes scroll {
